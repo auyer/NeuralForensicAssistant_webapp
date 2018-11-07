@@ -1,38 +1,45 @@
 <template>
   <form id="login">
-      <h1>Login</h1>
+	  <h1>Login</h1>
   <div class="group">
-    <input type="text" v-model="loginField"><span class="highlight"></span><span class="bar"></span>
-    <label>Username</label>
+	<input type="text" v-model="input.username"><span class="highlight"></span><span class="bar"></span>
+	<label>Username</label>
   </div>
   <div class="group">
-    <input type="password" v-model="passwordField"><span class="highlight"></span><span class="bar"></span>
-    <label>Password</label>
+	<input type="password" v-model="input.password"><span class="highlight"></span><span class="bar"></span>
+	<label>Password</label>
   </div>
   <div>
-    <button v-ripple class="button buttonBlue">Login</button>
+	<button v-ripple @click="login" class="button buttonBlue">Login</button>
   </div>
 </form>
 </template>
 
 <script>
-// let loginForm = new Vue({
-//     el: '#login',
-//     data:{
-//         loginField: "",
-//         passwordField: ""
-//     }
-// });
 export default {
-  data: {
-    loginField: "",
-    passwordField: "",
-  },
-  methods: {
-    hello: function() {
-      return 'Hello World';
-    }
-  }
+	name: 'Login',
+	data() {
+		return {
+			input: {
+				username: '',
+				password: '',
+			},
+		};
+	},
+	methods: {
+		login() {
+			if (this.input.username !== '' && this.input.password !== '') {
+					if (this.input.username === this.$parent.mock.username && this.input.password === this.$parent.mock.password) {
+						this.$emit('authenticated', true);
+						this.$router.replace({ name: 'Secure' });
+					} else {
+						console.log('The username and / or password is incorrect');
+					}
+			} else {
+				console.log('A username and password must be present');
+			}
+		},
+	},
 };
 </script>
 
