@@ -24,9 +24,11 @@ module.exports = {
   },
   // add your custom rules here
   'rules': {
-    "rules": {
-      "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "rules":{
+      "indent": [true, "tabs", 1],
+      "indent-size": [true, 1],
       "no-tabs": 0,
+      "allowIndentationTabs": true
     },
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
