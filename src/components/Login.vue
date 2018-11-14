@@ -1,18 +1,22 @@
 <template>
-  <form id="login">
-	  <h1>Login</h1>
-  <div class="group">
-	<input type="text" v-model="input.username"><span class="highlight"></span><span class="bar"></span>
-	<label>Username</label>
-  </div>
-  <div class="group">
-	<input type="password" v-model="input.password"><span class="highlight"></span><span class="bar"></span>
-	<label>Password</label>
-  </div>
-  <div>
-	<button v-ripple @click="login" class="button buttonBlue">Login</button>
-  </div>
-</form>
+<v-form ref="form" v-model="valid" lazy-validation>
+	<h1>Login</h1>
+	<v-text-field
+	v-model="input.username"
+	:rules="emailRules"
+	label="E-mail"
+	required
+	></v-text-field>
+	<v-text-field
+	:type="'password'"	
+	v-model="input.password"
+	:rules="nameRules"
+	label="Password"
+	required
+	></v-text-field>  
+	<v-btn :disabled="!valid" @click="login"> Login </v-btn>
+	<v-btn @click="clear">clear</v-btn>
+</v-form>
 </template>
 
 <script>
@@ -24,27 +28,52 @@ export default {
 				username: '',
 				password: '',
 			},
+			mock: {
+				username: "user@na.me",
+				password: "password",
+				name : "Investigator X",
+				position : "Chief Cyber Foresics Investigator",
+				company : "CYBERPOL Investigation",
+
+
+			},
+			valid: true,
+			name: '',
+			nameRules: [
+			v => !!v || 'Name is required',
+			v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+			],
+			email: '',
+			emailRules: [
+			v => !!v || 'E-mail is required',
+			v => /.+@.+/.test(v) || 'E-mail must be valid'
+			],
 		};
 	},
 	methods: {
 		login() {
-			if (this.input.username !== '' && this.input.password !== '') {
-					if (this.input.username === this.$parent.mock.username && this.input.password === this.$parent.mock.password) {
-						this.$emit('authenticated', true);
-						this.$router.replace({ name: 'Secure' });
-					} else {
-						console.log('The username and / or password is incorrect');
-					}
-			} else {
-				console.log('A username and password must be present');
+			if (this.$refs.form.validate()) {
+				if (this.input.username !== '' && this.input.password !== '') {
+						if (this.input.username === this.mock.username && this.input.password === this.mock.password) {
+							this.$emit('authenticated', true);
+							this.$router.replace({ name: 'Secure' });
+						} else {
+							console.log('The username and / or password is incorrect');
+						}
+				} else {
+					console.log('A username and password must be present');
+				}
 			}
 		},
+		clear () {
+			this.$refs.form.reset()
+		}
 	},
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 h1, h2 {
   font-weight: normal;
 }
