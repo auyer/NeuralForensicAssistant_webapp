@@ -8,8 +8,8 @@
 				<v-spacer></v-spacer>
 				<!-- <div v-if="authenticated"> -->
 				<v-toolbar-items v-if="authenticated">
-				<v-btn flat color="blue"><router-link to='/list' replace>Cases</router-link></v-btn>
-				<v-btn flat><router-link to="/login" v-on:click.native="logout()" replace>Logout</router-link></v-btn>
+				<v-btn flat color="orange"><router-link to='/list' replace>Cases</router-link></v-btn>
+				<v-btn flat color="blue"><router-link to="/login" v-on:click.native="logout()" replace>Logout</router-link></v-btn>
 				<!-- </div> -->
 				<!-- <v-btn flat>Link Three</v-btn> -->
 				</v-toolbar-items>
@@ -22,9 +22,7 @@
 
 <script>
 import Vue from 'vue';
-import Ripple from 'vue-ripple-directive';
 
-Vue.directive('ripple', Ripple);
 export default {
 	name: 'app',
 	data() {
