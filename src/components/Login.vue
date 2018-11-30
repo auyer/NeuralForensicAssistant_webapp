@@ -4,7 +4,7 @@
 	<v-text-field
 	v-model="input.username"
 	:rules="emailRules"
-	label="E-mail"
+	label="Username"
 	required
 	></v-text-field>
 	<v-text-field
