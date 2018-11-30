@@ -2,6 +2,7 @@
   <div class="hello">
     <img src="../assets/logo.png" alt="Forensic Deep Learning">
     <a href='./#/login'><button v-ripple class="button buttonBlue">Login</button></a>
+    <a href='./#/list'><button v-ripple class="button buttonBlue">List</button></a>
     <h1>{{ msg }}</h1>
   </div>
 </template>
