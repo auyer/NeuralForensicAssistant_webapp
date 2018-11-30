@@ -1,19 +1,8 @@
 <template>
 <v-form ref="form" v-model="valid" lazy-validation>
 	<h1>Login</h1>
-	<v-text-field
-	v-model="input.username"
-	:rules="emailRules"
-	label="Username"
-	required
-	></v-text-field>
-	<v-text-field
-	:type="'password'"	
-	v-model="input.password"
-	:rules="nameRules"
-	label="Password"
-	required
-	></v-text-field>  
+	<v-text-field v-model="input.username" :rules="emailRules" label="Username" required ></v-text-field>
+	<v-text-field :type="'password'" v-model="input.password" :rules="nameRules" label="Password" required></v-text-field>  
 	<v-btn :disabled="!valid" @click="login"> Login </v-btn>
 	<v-btn @click="clear">clear</v-btn>
 </v-form>
@@ -30,12 +19,7 @@ export default {
 			},
 			mock: {
 				username: "user@na.me",
-				password: "password",
-				name : "Investigator X",
-				position : "Chief Cyber Foresics Investigator",
-				company : "CYBERPOL Investigation",
-
-
+				password: "password"
 			},
 			valid: true,
 			name: '',
