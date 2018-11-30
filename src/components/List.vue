@@ -15,7 +15,7 @@
 					<div v-if="!selected" class="title grey--text text--lighten-1 font-weight-light" style="align-self: center;" >
 					Select a Case
 					</div>
-					<v-card v-else :key="selected.id" class="pt-4 mx-auto" flat max-width="400" >
+					<v-card v-else :key="selected.id" class="pt-4 mx-auto" flat max-width="500" >
 						<v-card-text>
 							<h3 class="headline mb-2">
 								Case Number {{ selected.address.zipcode }}
@@ -23,7 +23,7 @@
 							<!-- <h3 class="headline mb-2">
 								{{ selected.name }}
 							</h3> -->
-							<div class="mb-2"> Main Investigator : {{ selected.name }} </div>
+							<div class="mb-2"> Case Leader : {{ selected.name }} </div>
 							<div class="mb-2"> Contact Number : {{ selected.phone }} </div>
 							<!-- <div class="mb-2"> Address : {{ selected.address.city }}, {{ selected.address.suite }} </div> -->
 							<!-- <div class="subheading font-weight-bold">  code : {{ selected.address.zipcode }}</div> -->
@@ -76,8 +76,14 @@
 									<v-divider></v-divider>
 									<v-card-actions>
 									<!-- <v-btn flat color="orange">Add Notes</v-btn> -->
-									<v-btn flat color="orange">Analyse With Neural Engine</v-btn>
+									<v-btn class="mx-auto" :loading="loading" :disabled="loading" color="success" @click="loader = 'loading'" > Analyse With Neural Engine
+								<span slot="loader">Analysis ...</span>
+								</v-btn>
+									<!-- <span slot="loader2">Analysing ...</span></v-btn> -->
+									<!-- <v-btn flat color="orange">Analyse With Neural Engine</v-btn> -->
 									</v-card-actions>
+									<!-- <v-progress-linear :indeterminate="true"></v-progress-linear> -->
+
 									<v-divider></v-divider>
 
 									<v-card-title secondary-title>
@@ -108,10 +114,11 @@ export default {
 	data: function() {
 		return {
 			active: [],
-			avatar: null,
 			open: [],
 			users: [],
 			photos: [],
+			loader: null,
+			loading : false
 		};
 	},
 	computed: {
@@ -132,19 +139,23 @@ export default {
 		}
 	},
 	watch: {
-		selected: 'randomAvatar'
+		loader () {
+        const l = this.loader
+        this[l] = !this[l]
+
+		setTimeout(() => (this[l] = false), 10000)
+
+        this.loader = null
+	  }
 	},
 	methods: {
 		async fetchCases (item) {
-			// await pause(500)
+			await pause(100)
 
 			return fetch('https://jsonplaceholder.typicode.com/users')
 			.then(res => res.json())
 			.then(json => (item.children.push(...json)))
 			.catch(err => console.warn(err))
-		},
-		randomAvatar () {
-			this.avatar = avatars[Math.floor(Math.random() * avatars.length)]
 		}
 	}
 };
@@ -153,7 +164,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .vignette {
-  max-width: 60px;
+  max-width: 70px;
   max-height: 60px;
   margin-right: 4%;
 }
