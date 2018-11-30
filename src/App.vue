@@ -6,11 +6,11 @@
 				<!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
 				<v-toolbar-title>Forensic Deep Learning</v-toolbar-title>
 				<v-spacer></v-spacer>
-				<v-toolbar-items class="hidden-sm-and-down">
-				<div v-if="authenticated">
-				<router-link to='/list' replace><v-btn flat>Cases</v-btn></router-link>
-				<router-link to="/login" v-on:click.native="logout()" replace><v-btn flat>Logout</v-btn></router-link>
-				</div>
+				<!-- <div v-if="authenticated"> -->
+				<v-toolbar-items v-if="authenticated">
+				<v-btn flat color="blue"><router-link to='/list' replace>Cases</router-link></v-btn>
+				<v-btn flat><router-link to="/login" v-on:click.native="logout()" replace>Logout</router-link></v-btn>
+				<!-- </div> -->
 				<!-- <v-btn flat>Link Three</v-btn> -->
 				</v-toolbar-items>
 			</v-toolbar>
@@ -23,14 +23,13 @@
 <script>
 import Vue from 'vue';
 import Ripple from 'vue-ripple-directive';
-import WebFontLoader from 'webfontloader';
 
 Vue.directive('ripple', Ripple);
 export default {
 	name: 'app',
 	data() {
 		return {
-			authenticated: false,
+			authenticated: false, // SET TO TRUE DURING DEVEL
 		}
 	},
 	mounted() {
